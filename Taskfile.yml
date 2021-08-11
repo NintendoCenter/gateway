@@ -1,0 +1,12 @@
+version: 3
+
+tasks:
+  playground:
+    desc: Starts GQL playground
+    cmds:
+      - go run ./server.go
+
+  generate:
+    desc: Generates code based on GQL schema
+    cmds:
+      - gqlgen generate
