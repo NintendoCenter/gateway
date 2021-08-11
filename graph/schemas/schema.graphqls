@@ -1,3 +1,19 @@
+type Query {
+  games: [Game!]
+  find(input: SearchInput!): [Game!]
+}
+
+type Mutation {
+  createNotification(input: NotificationInput!): Notification!
+  removeNotification(gameId: String!): [Notification!]
+}
+
+input SearchInput {
+  onlyDigital: Boolean
+  allowUsed: Boolean
+  title: String
+}
+
 type Game {
   id: String!
   title: String!
@@ -31,16 +47,8 @@ type Notification {
   priceLowerThan: Float
 }
 
-type Query {
-  games: [Game!]!
-}
-
 input NotificationInput {
   gameId: String!
   priceLowerThan: Float
 }
 
-type Mutation {
-  createNotification(input: NotificationInput!): Notification!
-  removeNotification(gameId: String!): [Notification!]
-}
