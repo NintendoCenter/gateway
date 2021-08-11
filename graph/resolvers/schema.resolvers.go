@@ -4,17 +4,22 @@ package resolvers
 // will be copied through when generating and any unknown code will be moved to the end.
 
 import (
-	"NintendoCenter/gateway/graph/generated"
-	"NintendoCenter/gateway/graph/model"
 	"context"
 	"fmt"
+
+	"NintendoCenter/gateway/graph/generated"
+	"NintendoCenter/gateway/graph/model"
 )
 
-func (r *mutationResolver) CreateTodo(ctx context.Context, input model.NewTodo) (*model.Todo, error) {
+func (r *mutationResolver) CreateNotification(ctx context.Context, input model.NotificationInput) (*model.Notification, error) {
 	panic(fmt.Errorf("not implemented"))
 }
 
-func (r *queryResolver) Todos(ctx context.Context) ([]*model.Todo, error) {
+func (r *mutationResolver) RemoveNotification(ctx context.Context, gameID string) ([]*model.Notification, error) {
+	panic(fmt.Errorf("not implemented"))
+}
+
+func (r *queryResolver) Games(ctx context.Context) ([]*model.Game, error) {
 	panic(fmt.Errorf("not implemented"))
 }
 

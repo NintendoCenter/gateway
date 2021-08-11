@@ -1,28 +1,46 @@
-# GraphQL schema example
-#
-# https://gqlgen.com/getting-started/
-
-type Todo {
-  id: ID!
-  text: String!
-  done: Boolean!
-  user: User!
+type Game {
+  id: String!
+  title: String!
+  description: String
+  imageUrl: String
+  offers: [Offer!]
 }
 
-type User {
-  id: ID!
-  name: String!
+type Offer {
+  shop: Shop!
+  isDigital: Boolean!
+  isUsed: Boolean!
+  link: String!
+  price: Price
+}
+
+type Price {
+  original: Float
+  discrounted: Float
+  real: Float!
+}
+
+enum Shop {
+  NINTENDO
+  SAVELA
+  INVEREST
+}
+
+type Notification {
+  gameId: String!
+  priceLowerThan: Float
 }
 
 type Query {
-  todos: [Todo!]!
+  games: [Game!]!
 }
 
-input NewTodo {
-  text: String!
-  userId: String!
+input NotificationInput {
+  gameId: String!
+  priceLowerThan: Float
 }
 
 type Mutation {
-  createTodo(input: NewTodo!): Todo!
+  createNotification(input: NotificationInput!): Notification!
+  removeNotification(gameId: String!): [Notification!]
 }
