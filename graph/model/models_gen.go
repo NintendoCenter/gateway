@@ -14,6 +14,7 @@ type Game struct {
 	Description *string  `json:"description"`
 	ImageURL    *string  `json:"imageUrl"`
 	Offers      []*Offer `json:"offers"`
+	BestOffer   *Offer   `json:"bestOffer"`
 }
 
 type Notification struct {
@@ -38,6 +39,12 @@ type Price struct {
 	Original    *float64 `json:"original"`
 	Discrounted *float64 `json:"discrounted"`
 	Real        float64  `json:"real"`
+}
+
+type SearchInput struct {
+	OnlyDigital *bool   `json:"onlyDigital"`
+	AllowUsed   *bool   `json:"allowUsed"`
+	Title       *string `json:"title"`
 }
 
 type Shop string

@@ -7,6 +7,8 @@ import (
 
 	"NintendoCenter/gateway/graph/generated"
 	"NintendoCenter/gateway/graph/resolvers"
+	"NintendoCenter/gateway/internal/protos"
+	"google.golang.org/grpc"
 
 	"github.com/99designs/gqlgen/graphql/handler"
 	"github.com/99designs/gqlgen/graphql/playground"
@@ -20,7 +22,13 @@ func main() {
 		port = defaultPort
 	}
 
-	srv := handler.NewDefaultServer(generated.NewExecutableSchema(generated.Config{Resolvers: &resolvers.Resolver{}}))
+	conn, err := grpc.Dial("localhost:9092", grpc.WithInsecure())
+	if err != nil {
+		log.Fatal("error on creating grpc connection", err)
+	}
+
+	client := protos.NewGameCollectionClient(conn)
+	srv := handler.NewDefaultServer(generated.NewExecutableSchema(generated.Config{Resolvers: resolvers.NewResolver(client)}))
 
 	http.Handle("/playground", playground.Handler("GraphQL playground", "/"))
 	http.Handle("/", srv)

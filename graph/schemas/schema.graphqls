@@ -1,5 +1,4 @@
 type Query {
-  games: [Game!]
   find(input: SearchInput!): [Game!]
 }
 
@@ -20,6 +19,7 @@ type Game {
   description: String
   imageUrl: String
   offers: [Offer!]
+  bestOffer: Offer
 }
 
 type Offer {
