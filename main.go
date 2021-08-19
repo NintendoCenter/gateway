@@ -3,7 +3,6 @@ package main
 import (
 	"log"
 	"net/http"
-	"os"
 
 	"NintendoCenter/gateway/graph/generated"
 	"NintendoCenter/gateway/graph/resolvers"
@@ -14,15 +13,11 @@ import (
 	"github.com/99designs/gqlgen/graphql/playground"
 )
 
-const defaultPort = "8080"
 
 func main() {
-	port := os.Getenv("PORT")
-	if port == "" {
-		port = defaultPort
-	}
+	cfg, _ := NewConfig()
 
-	conn, err := grpc.Dial("localhost:9092", grpc.WithInsecure())
+	conn, err := grpc.Dial(cfg.CollectionAddr, grpc.WithInsecure())
 	if err != nil {
 		log.Fatal("error on creating grpc connection", err)
 	}
@@ -33,6 +28,6 @@ func main() {
 	http.Handle("/playground", playground.Handler("GraphQL playground", "/"))
 	http.Handle("/", srv)
 
-	log.Printf("connect to http://localhost:%s/ for GraphQL playground", port)
-	log.Fatal(http.ListenAndServe(":"+port, nil))
+	log.Printf("connect to http://localhost:%s/ for GraphQL playground", cfg.WebPort)
+	log.Fatal(http.ListenAndServe(":"+cfg.WebPort, nil))
 }
